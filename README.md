@@ -1,1 +1,1 @@
-# -compareviewsandsqlsource
+# compareviewsandsqlsource
