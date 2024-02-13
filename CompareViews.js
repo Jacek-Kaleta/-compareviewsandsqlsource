@@ -84,7 +84,7 @@ export function compare(xmlFile, sqlFile)
 				let name = findAndStartWith(text).toUpperCase();
 				text = changeDbOwner(text,name).trim();
 				if (views[name] == undefined) views[name] = {};
-				views[name].text = text;
+				views[name].text = removeForceEditionable(text);
 			}
 
 			function removeSemicolon(str) {
@@ -93,9 +93,16 @@ export function compare(xmlFile, sqlFile)
 
 			function checkAtTheBeginningOfLine(text) 
 			{	
-				const regex = /^\s*CREATE\s+OR\s+REPLACE\s+VIEW/i;
+				//const regex = /^\s*CREATE\s+OR\s+REPLACE\s+VIEW/i;
+				const regex = /^\s*CREATE\s+OR\s+REPLACE\s+(FORCE\s+EDITIONABLE\s+)?VIEW/i;
 				const startsWithCreateView = regex.test(text);
 				return startsWithCreateView;
+			}
+			
+			function removeForceEditionable(text)
+			{
+				const regex = /(CREATE\s+OR\s+REPLACE\s+)FORCE\s+EDITIONABLE\s+(VIEW)/;
+				return text.replace(regex, '$1$2');
 			}
 			
 			function checkIfEndsWithSemicolon(text) 
