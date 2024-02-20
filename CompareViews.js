@@ -52,7 +52,8 @@ export function compare(xmlFile, sqlFile)
 	}
 
 	{
-		let lines = sqlFile.split("\r\n");
+		sqlFile = sqlFile.replace(/\r/g, '');
+		let lines = sqlFile.split("\n");
 		let i= 0;
 		while (i<= lines.length)
 		{

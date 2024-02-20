@@ -10,6 +10,8 @@ fileInput.addEventListener('change', function(event)
 	if (compared) 
 	{
 		clear();
+		xmlText = undefined ;
+		sqlText = undefined ;
 		compared =0;
 	}
 	const selectedFile = event.target.files[0];
@@ -31,13 +33,14 @@ function loadFile(file) {
 		if (file.name.split('.').pop().toLowerCase() =='xml')
 		{
 			xmlText = fileContent;
-			message('XML file loaded. Length '+xmlText.length);
+			message('XML file '+file.name+' loaded. Length '+xmlText.length);
 		}
 		else
 		if (file.name.split('.').pop().toLowerCase() =='sql' || file.name.split('.').pop().toLowerCase() =='txt')
 		{
-			sqlText = fileContent;
-			message('SQL file loaded. Length '+sqlText.length);
+			if (sqlText == undefined) sqlText = fileContent;
+			else sqlText += '\r\n'+ fileContent;
+			message('SQL file '+file.name+' loaded. Length '+sqlText.length);
 
 		} else message('Unknow file type !');
 	};
